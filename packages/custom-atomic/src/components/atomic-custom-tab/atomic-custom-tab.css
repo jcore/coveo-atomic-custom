@@ -1,31 +1,25 @@
 :host {
   display: block;
 }
+
 a {
+  align-items: center;
+  background: none;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  font-weight: normal;
+  gap: 8px;
+  line-height: calc(24 / 16 * 1em);
   margin: 0px 6px;
   padding: 16px;
-  height: 1rem;
-  width: fit-content;
-  color: #1372ec;
-  font-weight: 500;
-  border-radius: 26px;
-  border: 1px solid #1372ec;
-  background: none;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  cursor: pointer;
+  text-decoration: none;
   user-select: none;
+  white-space: nowrap;
+  width: fit-content;
 }
 
-a.active {
-  color: white;
-  background-color: #1372ec;
-  transition: background-color 0.5s ease 0s;
-}
-
-a:hover {
-  color: white;
-  background-color: #0b6ae7;
-  transition: background-color 0.5s ease 0s;
+a:hover, a:focus, a:active, a.active {
+  color: #222;
 }
