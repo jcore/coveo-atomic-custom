@@ -33,6 +33,7 @@ export class AtomicCustomTab {
   @State() private tabState!: TabState;
 
   public async connectedCallback() {
+    console.log('atomic-custom-tab connectedCallback', this.bindings);
     await customElements.whenDefined('atomic-search-interface');
     try {
       this.bindings = await initializeBindings(this.host);
@@ -94,6 +95,7 @@ export class AtomicCustomTab {
   }
 
   public render() {
+    console.log('render atomic-custom-tab', this.bindings);
     if (this.error) {
       return <div>Error when initializing the component, please view the console for more information.</div>;
     }

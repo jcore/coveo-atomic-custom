@@ -15,7 +15,8 @@
     "removeComments": false,
     "sourceMap": true,
     "jsx": "react",
-    "target": "es2015"
+    "target": "es2015",
+    "module": "ESNext"
   },
   "include": ["lib/**/*.ts", "lib/**/*.tsx"],
   "exclude": ["**/__tests__/**"],

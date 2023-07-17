@@ -5,7 +5,56 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { RedirectionPayload } from "@coveo/atomic";
+export { RedirectionPayload } from "@coveo/atomic";
 export namespace Components {
+    /**
+     * The `atomic-custom-search-box` component creates a search box with built-in support for suggestions.
+     */
+    interface AtomicCustomSearchBox {
+        /**
+          * Whether to clear all active query filters when the end user submits a new query from the search box. Setting this option to "false" is not recommended & can lead to an increasing number of queries returning no results.
+         */
+        "clearFilters": boolean;
+        /**
+          * Whether to prevent the user from triggering searches and query suggestions from the component. Perfect for use cases where you need to disable the search conditionally.
+         */
+        "disableSearch": boolean;
+        /**
+          * Whether to interpret advanced [Coveo Cloud query syntax](https://docs.coveo.com/en/1814/) in the query. You should only enable query syntax in the search box if you have good reasons to do so, as it requires end users to be familiar with Coveo Cloud query syntax, otherwise they will likely be surprised by the search box behaviour.  When the `redirection-url` property is set and redirects to a page with more `atomic-search-box` components, all `atomic-search-box` components need to have the same `enable-query-syntax` value.
+         */
+        "enableQuerySyntax": boolean;
+        /**
+          * The minimum query length required to enable search. For example, to disable the search for empty queries, set this to `1`.
+         */
+        "minimumQueryLength": number;
+        /**
+          * The amount of queries displayed when the user interacts with the search box. By default, a mix of query suggestions and recent queries will be shown. You can configure those settings using the following components as children:  - atomic-search-box-query-suggestions  - atomic-search-box-recent-queries
+         */
+        "numberOfQueries": number;
+        /**
+          * Defining this option makes the search box standalone (see [Use a Standalone Search Box](https://docs.coveo.com/en/atomic/latest/usage/ssb/)).  This option defines the default URL the user should be redirected to, when a query is submitted. If a query pipeline redirect is triggered, it will redirect to that URL instead (see [query pipeline triggers](https://docs.coveo.com/en/1458)).
+         */
+        "redirectionUrl"?: string;
+        /**
+          * The timeout for suggestion queries, in milliseconds. If a suggestion query times out, the suggestions from that particular query won't be shown.
+         */
+        "suggestionTimeout": number;
+    }
+    interface AtomicCustomSearchBoxQuerySuggestions {
+        /**
+          * The SVG icon to display.  - Use a value that starts with `http://`, `https://`, `./`, or `../`, to fetch and display an icon from a given location. - Use a value that starts with `assets://`, to display an icon from the Atomic package. - Use a stringified SVG to display it directly.
+         */
+        "icon"?: string;
+        /**
+          * The maximum number of suggestions that will be displayed if the user has typed something into the input field.
+         */
+        "maxWithQuery"?: number;
+        /**
+          * The maximum number of suggestions that will be displayed initially when the input field is empty.
+         */
+        "maxWithoutQuery"?: number;
+    }
     interface AtomicCustomTab {
         "excludedFacets": string;
         "expression": string;
@@ -14,7 +63,26 @@ export namespace Components {
         "label": string;
     }
 }
+export interface AtomicCustomSearchBoxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAtomicCustomSearchBoxElement;
+}
 declare global {
+    /**
+     * The `atomic-custom-search-box` component creates a search box with built-in support for suggestions.
+     */
+    interface HTMLAtomicCustomSearchBoxElement extends Components.AtomicCustomSearchBox, HTMLStencilElement {
+    }
+    var HTMLAtomicCustomSearchBoxElement: {
+        prototype: HTMLAtomicCustomSearchBoxElement;
+        new (): HTMLAtomicCustomSearchBoxElement;
+    };
+    interface HTMLAtomicCustomSearchBoxQuerySuggestionsElement extends Components.AtomicCustomSearchBoxQuerySuggestions, HTMLStencilElement {
+    }
+    var HTMLAtomicCustomSearchBoxQuerySuggestionsElement: {
+        prototype: HTMLAtomicCustomSearchBoxQuerySuggestionsElement;
+        new (): HTMLAtomicCustomSearchBoxQuerySuggestionsElement;
+    };
     interface HTMLAtomicCustomTabElement extends Components.AtomicCustomTab, HTMLStencilElement {
     }
     var HTMLAtomicCustomTabElement: {
@@ -22,10 +90,63 @@ declare global {
         new (): HTMLAtomicCustomTabElement;
     };
     interface HTMLElementTagNameMap {
+        "atomic-custom-search-box": HTMLAtomicCustomSearchBoxElement;
+        "atomic-custom-search-box-query-suggestions": HTMLAtomicCustomSearchBoxQuerySuggestionsElement;
         "atomic-custom-tab": HTMLAtomicCustomTabElement;
     }
 }
 declare namespace LocalJSX {
+    /**
+     * The `atomic-custom-search-box` component creates a search box with built-in support for suggestions.
+     */
+    interface AtomicCustomSearchBox {
+        /**
+          * Whether to clear all active query filters when the end user submits a new query from the search box. Setting this option to "false" is not recommended & can lead to an increasing number of queries returning no results.
+         */
+        "clearFilters"?: boolean;
+        /**
+          * Whether to prevent the user from triggering searches and query suggestions from the component. Perfect for use cases where you need to disable the search conditionally.
+         */
+        "disableSearch"?: boolean;
+        /**
+          * Whether to interpret advanced [Coveo Cloud query syntax](https://docs.coveo.com/en/1814/) in the query. You should only enable query syntax in the search box if you have good reasons to do so, as it requires end users to be familiar with Coveo Cloud query syntax, otherwise they will likely be surprised by the search box behaviour.  When the `redirection-url` property is set and redirects to a page with more `atomic-search-box` components, all `atomic-search-box` components need to have the same `enable-query-syntax` value.
+         */
+        "enableQuerySyntax"?: boolean;
+        /**
+          * The minimum query length required to enable search. For example, to disable the search for empty queries, set this to `1`.
+         */
+        "minimumQueryLength"?: number;
+        /**
+          * The amount of queries displayed when the user interacts with the search box. By default, a mix of query suggestions and recent queries will be shown. You can configure those settings using the following components as children:  - atomic-search-box-query-suggestions  - atomic-search-box-recent-queries
+         */
+        "numberOfQueries"?: number;
+        /**
+          * Event that is emitted when a standalone search box redirection is triggered. By default, the search box will directly change the URL and redirect accordingly, so if you want to handle the redirection differently, use this event.  Example: ```html <script>   document.querySelector('atomic-search-box').addEventListener((e) => {     e.preventDefault();     // handle redirection   }); </script> ... <atomic-search-box redirection-url="/search"></atomic-search-box> ```
+         */
+        "onRedirect"?: (event: AtomicCustomSearchBoxCustomEvent<RedirectionPayload>) => void;
+        /**
+          * Defining this option makes the search box standalone (see [Use a Standalone Search Box](https://docs.coveo.com/en/atomic/latest/usage/ssb/)).  This option defines the default URL the user should be redirected to, when a query is submitted. If a query pipeline redirect is triggered, it will redirect to that URL instead (see [query pipeline triggers](https://docs.coveo.com/en/1458)).
+         */
+        "redirectionUrl"?: string;
+        /**
+          * The timeout for suggestion queries, in milliseconds. If a suggestion query times out, the suggestions from that particular query won't be shown.
+         */
+        "suggestionTimeout"?: number;
+    }
+    interface AtomicCustomSearchBoxQuerySuggestions {
+        /**
+          * The SVG icon to display.  - Use a value that starts with `http://`, `https://`, `./`, or `../`, to fetch and display an icon from a given location. - Use a value that starts with `assets://`, to display an icon from the Atomic package. - Use a stringified SVG to display it directly.
+         */
+        "icon"?: string;
+        /**
+          * The maximum number of suggestions that will be displayed if the user has typed something into the input field.
+         */
+        "maxWithQuery"?: number;
+        /**
+          * The maximum number of suggestions that will be displayed initially when the input field is empty.
+         */
+        "maxWithoutQuery"?: number;
+    }
     interface AtomicCustomTab {
         "excludedFacets": string;
         "expression": string;
@@ -34,6 +155,8 @@ declare namespace LocalJSX {
         "label": string;
     }
     interface IntrinsicElements {
+        "atomic-custom-search-box": AtomicCustomSearchBox;
+        "atomic-custom-search-box-query-suggestions": AtomicCustomSearchBoxQuerySuggestions;
         "atomic-custom-tab": AtomicCustomTab;
     }
 }
@@ -41,6 +164,11 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * The `atomic-custom-search-box` component creates a search box with built-in support for suggestions.
+             */
+            "atomic-custom-search-box": LocalJSX.AtomicCustomSearchBox & JSXBase.HTMLAttributes<HTMLAtomicCustomSearchBoxElement>;
+            "atomic-custom-search-box-query-suggestions": LocalJSX.AtomicCustomSearchBoxQuerySuggestions & JSXBase.HTMLAttributes<HTMLAtomicCustomSearchBoxQuerySuggestionsElement>;
             "atomic-custom-tab": LocalJSX.AtomicCustomTab & JSXBase.HTMLAttributes<HTMLAtomicCustomTabElement>;
         }
     }

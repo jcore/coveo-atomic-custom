@@ -1,6 +1,4 @@
-# my-component
-
-
+# atomic-custom-search-box-query-suggestions
 
 <!-- Auto Generated Below -->
 

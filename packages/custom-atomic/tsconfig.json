@@ -1,25 +1,20 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
     "declaration": false,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2020", "esnext"],
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "module": "esnext",
-    "target": "es2017",
+    // create-react-app compatibility
+    // https://github.com/facebook/create-react-app/issues/9468#issuecomment-692963920
+    "target": "es2019",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react",
     "jsxFactory": "h"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

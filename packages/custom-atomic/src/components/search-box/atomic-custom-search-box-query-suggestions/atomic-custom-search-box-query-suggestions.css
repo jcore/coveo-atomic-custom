@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+a {
+  align-items: center;
+  background: none;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  font-weight: normal;
+  gap: 8px;
+  line-height: calc(24 / 16 * 1em);
+  margin: 0px 6px;
+  padding: 16px;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+a:hover,
+a:focus,
+a:active,
+a.active {
+  color: #222;
+}
